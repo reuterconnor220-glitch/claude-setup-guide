@@ -870,40 +870,30 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key</code></pre>
     <div class="step-body">
       <p>Now that everything is set up, here's how we actually use Claude to build things at CV. These are real patterns from real projects.</p>
 
-      <h3>The Prompt Formula That Works</h3>
-      <p>Every project we've built follows the same prompt structure: <strong>what it is</strong>, <strong>who it's for</strong>, <strong>what sections to include</strong>, and <strong>how thorough to be</strong>. Here are the actual prompts (cleaned up) from projects we've shipped:</p>
-
-      <h3>Explainer Sites (Most Common)</h3>
-      <p>These are single-page sites that explain something complex to a non-technical audience. We've used them for investor updates, app explainers, and technical deep dives.</p>
+      <h3>The Go-To Prompt</h3>
+      <p>This is basically the prompt we use for everything. Adapt it to whatever you're building:</p>
 
       <div class="prompt-example">
-        <p>"Build me a single-page explainer for our retirement planning app. I need to explain this to people who aren't technical. Include: what the app does, how someone would use it (the user flow), what inputs it needs from the user, what outputs it shows, how to read the chart, and what the tech stack is in plain English. Use mermaid charts to show the user flow and the tech architecture. Explain the math simply &mdash; use analogies like 'snowball rolling downhill' for compound interest. Make it as visual as possible. Single HTML file."</p>
+        <p>"Can you create a website that explains everything we're building visually? Use mermaid diagrams. Use as much visual explaining as you can. Grab a good design plugin to help you explain everything. Explain from the ground up &mdash; tell me what you're building and why. I'm not technical, I don't understand technical jargon. You can still teach it to me, but you need to explain it. Build this website and then show it to me."</p>
       </div>
 
-      <div class="prompt-example">
-        <p>"I need a visual explainer for our investors about the Glenwood Apartments refinancing deal. Explain: the big picture (old loan vs new loan), the new loan terms from Flatirons Bank, a timeline of what's happening and when, the cash situation (what we have, what's due, how we bridge the gap), and what 'non-recourse' means in plain English. Use mermaid charts for the timeline and for comparing the loan types. This is for investors who aren't in finance &mdash; explain everything thoroughly but don't be condescending."</p>
-      </div>
+      <p>That's it. That prompt (or some version of it) is what we used to build all of these:</p>
 
-      <h3>Technical Analysis</h3>
-      <p>For when you need Claude to research something technical and present findings clearly.</p>
+      <ul>
+        <li><strong>Retirement Planner Explainer</strong> &mdash; explains the app, the math behind it, the user flow, and the tech stack with mermaid charts and plain-English analogies</li>
+        <li><strong>Mac Mini Cluster Analysis</strong> &mdash; explains how to chain 4 Macs together to run AI models, with architecture diagrams, model compatibility tables, and expansion pricing</li>
+        <li><strong>Glenwood Investor Explainer</strong> &mdash; explains a loan refinancing deal to investors with timeline diagrams, cash flow analysis, and plain-English financial concepts</li>
+        <li><strong>BSW Strategy Briefing</strong> &mdash; presents a sponsorship recommendation to Dan with panel concepts, execution roadmap, and clear approve/reject options</li>
+        <li><strong>Trivia Night Plan</strong> &mdash; full event plan with venue options, budget, run of show, and phased execution checklist</li>
+      </ul>
 
-      <div class="prompt-example">
-        <p>"We have 4 Mac Minis that we want to chain together to run AI models locally using Exo. The machines are: Cody's M4 Pro 24GB, Connor's M4 Pro 24GB, Gib's M4 Pro 24GB, and Sabrina's M4 Standard 16GB. Build me a visual explainer that covers: what models can fit in our 88GB total RAM, how fast they'll actually run (with real numbers), what the network bottleneck looks like, and what expansion options we have with pricing. Include mermaid charts showing the cluster architecture and the inference pipeline. Give me specific model names and sizes, not vague recommendations."</p>
-      </div>
-
-      <h3>Strategy &amp; Decision Documents</h3>
-      <p>For presenting a recommendation that needs approval.</p>
-
-      <div class="prompt-example">
-        <p>"Create a strategic briefing site for Dan about Caruso Ventures' involvement in Boulder Startup Week 2026. Lead with the recommendation (what tier to sponsor, what panels to host). Then explain the rationale &mdash; why this tier and not another. Include 5-6 panel concepts that tie back to our portfolio companies. End with a clear execution roadmap and next steps. This is a decision document &mdash; Dan should be able to approve, modify, or reject at the end."</p>
-      </div>
-
-      <h3>Event &amp; Ops Planning</h3>
-      <p>For turning ideas into actionable plans with checklists and timelines.</p>
-
-      <div class="prompt-example">
-        <p>"Build me a planning page for a Young Leaders Trivia Night at Boulder Startup Week. I need: the event format (4 rounds, randomized teams, $1K budget), our goals (brand positioning, community building, deal flow), how we fill the room (personal outreach, LinkedIn, Slack), 3 venue options with pros/cons, a run of show timeline, budget breakdown, and a phased execution checklist (this week, 2 weeks out, 1 week out, day before, day of, after). Include specific names and responsibilities."</p>
-      </div>
+      <p>The key ingredients are always the same:</p>
+      <ul>
+        <li><strong>Mermaid diagrams</strong> &mdash; for timelines, flowcharts, architecture, comparisons. Claude generates these automatically.</li>
+        <li><strong>Visual explaining</strong> &mdash; cards, grids, color-coded sections, icons. Not walls of text.</li>
+        <li><strong>Ground-up explanation</strong> &mdash; don't assume the reader knows anything. Teach them along the way.</li>
+        <li><strong>Use the design plugin</strong> &mdash; type <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/frontend-design</code> before your prompt for better-looking output.</li>
+      </ul>
 
       <h3>Key Phrases That Make a Difference</h3>
       <ul>
