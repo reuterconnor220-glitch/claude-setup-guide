@@ -534,20 +534,21 @@ EOF</code></pre>
       <p>Gives Claude <strong>code review superpowers</strong> &mdash; it can analyze code quality, check test coverage, hunt for silent failures, review type design, validate comments, and simplify code. Use <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/review-pr</code> to run a full review, or Claude will automatically use these agents when relevant.</p>
 
       <h3>How to Install</h3>
-      <p>If you followed Step 5, these are <strong>already enabled</strong> &mdash; we included them in the settings.json file we wrote. But for future plugins, here's how to add more. Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">claude</code> and type:</p>
+      <p>If you followed Step 5, these two are <strong>already enabled</strong> &mdash; we included them in the settings.json file we wrote. But here's how to browse and add more plugins in the future:</p>
 
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">inside a claude session</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>/install-plugin frontend-design@claude-plugins-official
-/install-plugin pr-review-toolkit@claude-plugins-official</code></pre>
+        <pre><code>/plugins</code></pre>
       </div>
+
+      <p>This opens the plugin browser where you can see everything available and install with one click.</p>
 
       <div class="callout callout-tip">
         <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        <span>More plugins are available in the official marketplace. Type <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;">/install-plugin</code> inside a Claude session to browse what's available.</span>
+        <span>Not sure which plugins to grab? Ask Connor &mdash; he's tested most of them and can point you to the ones worth enabling for your workflow.</span>
       </div>
     </div>
   </section>
