@@ -278,25 +278,34 @@
         <pre><code>/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"</code></pre>
       </div>
 
-      <p>After the install finishes, set up your shell environment:</p>
+      <div class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <span><strong>Heads up:</strong> On a fresh Mac, a popup will appear asking you to install "Command Line Developer Tools." Click <strong>Install</strong> and wait &mdash; this can take 10-20 minutes. It's normal. If it doesn't appear automatically, run <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;">xcode-select --install</code> first.</span>
+      </div>
+
+      <p>After the install finishes, Homebrew will print some "Next steps" in the terminal. Run these two commands it tells you (they look like this):</p>
 
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>eval "$(/opt/homebrew/bin/brew shellenv zsh)"</code></pre>
+        <pre><code>echo >> ~/.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"</code></pre>
       </div>
 
-      <p>Make it permanent so it loads every time you open a terminal:</p>
+      <p>Verify it worked:</p>
 
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> ~/.zprofile</code></pre>
+        <pre><code>brew help</code></pre>
       </div>
+
+      <p>If you see a help page, you're good. If you see "command not found", close Warp completely, reopen it, and try again.</p>
     </div>
   </section>
 
@@ -322,18 +331,17 @@
         <pre><code>brew install node</code></pre>
       </div>
 
-      <p>Verify everything installed correctly:</p>
+      <p>Verify it worked:</p>
 
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>node --version
-npm --version</code></pre>
+        <pre><code>node -v</code></pre>
       </div>
 
-      <p>You should see version numbers for both. If you do, you're good.</p>
+      <p>You should see a version number like <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;">v22.x.x</code>. If you do, you're good.</p>
     </div>
   </section>
 
@@ -360,8 +368,13 @@ npm --version</code></pre>
         <pre><code>npm install -g @anthropic-ai/claude-code</code></pre>
       </div>
 
+      <div class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <span><strong>If you see a "permission denied" or EACCES error:</strong> Try the backup install below instead. This is common on fresh Macs.</span>
+      </div>
+
       <h3>Backup Install (if npm gives you trouble)</h3>
-      <p>If the npm install fails or hangs, you can run it directly without installing globally:</p>
+      <p>If the command above fails, you can run Claude Code directly without a global install:</p>
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
@@ -403,37 +416,47 @@ npm --version</code></pre>
     <div class="step-body">
       <p>By default, Claude Code asks for permission before running every command. <strong>Dangerous mode</strong> removes all permission gates so Claude can read, write, execute, and deploy without interruption.</p>
 
-      <p>Add these aliases to your shell config:</p>
+      <p>First, create the AI workspace folder and add the aliases to your shell. Copy and paste this whole block &mdash; it does everything in one shot:</p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">~/.zshrc</span>
+          <span class="code-lang">bash — paste this whole thing</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>alias claude="claude --dangerously-skip-permissions"
-alias claude-ai="cd ~/AI && claude --dangerously-skip-permissions"</code></pre>
+        <pre><code><span class="comment"># Create the AI workspace</span>
+mkdir -p ~/AI
+
+<span class="comment"># Add the aliases to your shell config</span>
+echo 'alias claude="claude --dangerously-skip-permissions"' >> ~/.zshrc
+echo 'alias claude-ai="cd ~/AI && claude --dangerously-skip-permissions"' >> ~/.zshrc
+
+<span class="comment"># Reload so the aliases take effect</span>
+source ~/.zshrc</code></pre>
       </div>
 
-      <p>Reload your shell:</p>
+      <p>Now skip the confirmation prompt in Claude's settings. This writes the complete settings file in one go:</p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">bash</span>
+          <span class="code-lang">bash — paste this whole thing</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>source ~/.zshrc</code></pre>
+        <pre><code>mkdir -p ~/.claude
+cat > ~/.claude/settings.json << 'EOF'
+{
+  "enabledPlugins": {
+    "pr-review-toolkit@claude-plugins-official": true,
+    "frontend-design@claude-plugins-official": true
+  },
+  "voiceEnabled": true,
+  "skipDangerousModePermissionPrompt": true
+}
+EOF</code></pre>
       </div>
 
-      <p>Also skip the confirmation prompt in Claude's settings:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">~/.claude/settings.json</span>
-          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
-        </div>
-        <pre><code>{
-  <span class="key">"skipDangerousModePermissionPrompt"</span>: <span class="bool">true</span>
-}</code></pre>
+      <div class="callout callout-info">
+        <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
+        <span>This settings file also enables plugins and voice mode (covered in the next steps). We write it all at once so you don't have to edit it multiple times.</span>
       </div>
 
       <h3>Starting a Session</h3>
@@ -510,37 +533,21 @@ alias claude-ai="cd ~/AI && claude --dangerously-skip-permissions"</code></pre>
       <h3>2. PR Review Toolkit</h3>
       <p>Gives Claude <strong>code review superpowers</strong> &mdash; it can analyze code quality, check test coverage, hunt for silent failures, review type design, validate comments, and simplify code. Use <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/review-pr</code> to run a full review, or Claude will automatically use these agents when relevant.</p>
 
-      <h3>Install via CLI</h3>
-      <p>Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">claude</code> and type these commands inside a session:</p>
+      <h3>How to Install</h3>
+      <p>If you followed Step 5, these are <strong>already enabled</strong> &mdash; we included them in the settings.json file we wrote. But for future plugins, here's how to add more. Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">claude</code> and type:</p>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">claude session</span>
+          <span class="code-lang">inside a claude session</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
         <pre><code>/install-plugin frontend-design@claude-plugins-official
 /install-plugin pr-review-toolkit@claude-plugins-official</code></pre>
       </div>
 
-      <h3>Or Add Manually</h3>
-      <p>Edit <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">~/.claude/settings.json</code>:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">~/.claude/settings.json</span>
-          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
-        </div>
-        <pre><code>{
-  <span class="key">"enabledPlugins"</span>: {
-    <span class="key">"pr-review-toolkit@claude-plugins-official"</span>: <span class="bool">true</span>,
-    <span class="key">"frontend-design@claude-plugins-official"</span>: <span class="bool">true</span>
-  }
-}</code></pre>
-      </div>
-
       <div class="callout callout-tip">
         <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        <span>More plugins are available in the official marketplace. Type <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;">/install-plugin</code> to browse what's available.</span>
+        <span>More plugins are available in the official marketplace. Type <code style="font-family:'JetBrains Mono',monospace;font-size:0.8em;background:rgba(255,255,255,0.05);padding:2px 6px;border-radius:4px;">/install-plugin</code> inside a Claude session to browse what's available.</span>
       </div>
     </div>
   </section>
@@ -631,47 +638,17 @@ rm -rf ~/agency-agents-temp</code></pre>
       </div>
     </div>
     <div class="step-body">
-      <p>Voice mode lets you <strong>talk to Claude</strong> instead of typing. Describe what you want built, dictate changes, brainstorm while pacing around the room.</p>
-
-      <p>Add this to your settings file:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">~/.claude/settings.json</span>
-          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
-        </div>
-        <pre><code>{
-  <span class="key">"voiceEnabled"</span>: <span class="bool">true</span>
-}</code></pre>
-      </div>
+      <p>Voice mode lets you <strong>talk to Claude</strong> instead of typing. Describe what you want built, dictate changes, brainstorm while pacing around the room. If you followed Step 5, voice is <strong>already enabled</strong> in your settings.</p>
 
       <h3>How to Use Voice</h3>
       <ul>
-        <li><strong>Press the spacebar</strong> to start talking. Press it again to stop and send.</li>
-        <li>If the spacebar ever glitches or doesn't respond, type <strong><code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/voice</code></strong> to toggle voice mode on/off.</li>
+        <li><strong>Press the spacebar</strong> to start talking. Press it again to stop and send your message.</li>
+        <li><strong>If the spacebar ever glitches</strong> or doesn't respond, type <strong><code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/voice</code></strong> to toggle voice mode on/off. This always works as a fallback.</li>
       </ul>
-
-      <h3>Your Complete Settings File</h3>
-      <p>After all the steps above, your <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">~/.claude/settings.json</code> should look like this:</p>
-
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">~/.claude/settings.json — final</span>
-          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
-        </div>
-        <pre><code>{
-  <span class="key">"enabledPlugins"</span>: {
-    <span class="key">"pr-review-toolkit@claude-plugins-official"</span>: <span class="bool">true</span>,
-    <span class="key">"frontend-design@claude-plugins-official"</span>: <span class="bool">true</span>
-  },
-  <span class="key">"voiceEnabled"</span>: <span class="bool">true</span>,
-  <span class="key">"skipDangerousModePermissionPrompt"</span>: <span class="bool">true</span>
-}</code></pre>
-      </div>
 
       <div class="callout callout-tip">
         <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        <span>Voice is great for describing what you want built without thinking about syntax. Just talk naturally &mdash; "Hey, build me a dashboard with a sidebar and some charts" works perfectly.</span>
+        <span>Voice is great for iterating on something you can already see. Once Claude builds a page, just talk: "make the hero bigger", "swap the colors to dark mode", "add a section about pricing". Just talk naturally.</span>
       </div>
     </div>
   </section>
@@ -690,16 +667,29 @@ rm -rf ~/agency-agents-temp</code></pre>
     <div class="step-body">
       <p>GitHub stores your code and connects to Railway for automatic deployments.</p>
 
+      <h3>Install GitHub CLI &amp; Git</h3>
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
-        <pre><code>brew install gh</code></pre>
+        <pre><code>brew install gh git</code></pre>
       </div>
 
-      <p>Now log in through the CLI. It'll open your browser to authenticate:</p>
+      <h3>Set Up Your Identity</h3>
+      <p>Git needs to know who you are. Replace with your name and CV email:</p>
+      <div class="code-block">
+        <div class="code-header">
+          <span class="code-lang">bash</span>
+          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
+        </div>
+        <pre><code>git config --global user.name "Your Name"
+git config --global user.email "you@carusoventures.com"
+git config --global init.defaultBranch main</code></pre>
+      </div>
 
+      <h3>Log In</h3>
+      <p>This opens your browser to authenticate:</p>
       <div class="code-block">
         <div class="code-header">
           <span class="code-lang">bash</span>
@@ -708,28 +698,11 @@ rm -rf ~/agency-agents-temp</code></pre>
         <pre><code>gh auth login</code></pre>
       </div>
 
-      <p>Log in with your <strong>CV email</strong>. Follow the browser prompts to authenticate, then return to the terminal.</p>
-
-      <h3>Create &amp; Push a Repo</h3>
-      <div class="code-block">
-        <div class="code-header">
-          <span class="code-lang">bash</span>
-          <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
-        </div>
-        <pre><code><span class="comment"># Navigate to your project</span>
-cd ~/my-project
-git init
-git add .
-git commit -m "Initial commit"
-
-<span class="comment"># Create a GitHub repo and push</span>
-gh repo create my-project --public --source=.
-git push -u origin main</code></pre>
-      </div>
+      <p>Log in with your <strong>CV email</strong>. Follow the browser prompts, then return to the terminal.</p>
 
       <div class="callout callout-tip">
         <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        <span>You can also just tell Claude "commit and push this to GitHub" and it'll handle everything in dangerous mode.</span>
+        <span>You generally don't need to create repos or push manually &mdash; just tell Claude "commit and push this to GitHub" and it handles everything in dangerous mode.</span>
       </div>
     </div>
   </section>
@@ -756,7 +729,7 @@ git push -u origin main</code></pre>
         <pre><code>brew install railway</code></pre>
       </div>
 
-      <p>Log in through the CLI &mdash; it opens your browser:</p>
+      <p>Log in through the CLI. Try the browser login first:</p>
 
       <div class="code-block">
         <div class="code-header">
@@ -766,15 +739,20 @@ git push -u origin main</code></pre>
         <pre><code>railway login</code></pre>
       </div>
 
-      <p>Log in with your <strong>CV email</strong>. If the browser login doesn't work, use the browserless fallback:</p>
+      <div class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <span><strong>The browser login often doesn't work.</strong> If it hangs or fails, use the browserless method instead &mdash; it gives you a code to paste into your terminal:</span>
+      </div>
 
       <div class="code-block">
         <div class="code-header">
-          <span class="code-lang">bash — fallback</span>
+          <span class="code-lang">bash — use this if browser login fails</span>
           <button class="code-copy" onclick="copyCode(this)"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M5 11H3.5A1.5 1.5 0 012 9.5v-7A1.5 1.5 0 013.5 1h7A1.5 1.5 0 0112 2.5V5"/></svg> Copy</button>
         </div>
         <pre><code>railway login --browserless</code></pre>
       </div>
+
+      <p>Log in with your <strong>CV email</strong>.</p>
 
       <h3>Deploy a Project</h3>
       <div class="code-block">
