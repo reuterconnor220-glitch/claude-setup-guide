@@ -868,88 +868,83 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your-anon-key</code></pre>
       </div>
     </div>
     <div class="step-body">
-      <p>Now that everything is set up, here's the playbook for getting the best results out of Claude Code. These are the patterns and prompts we've used to build everything at CV.</p>
+      <p>Now that everything is set up, here's how we actually use Claude to build things at CV. These are real patterns from real projects.</p>
 
-      <h3>The Design &rarr; Build &rarr; Review Workflow</h3>
-      <ol>
-        <li><strong>Use <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/frontend-design</code></strong> when asking Claude to build anything visual. This activates the design plugin and produces dramatically better-looking output.</li>
-        <li><strong>Let Claude build it</strong> in bypass mode &mdash; just describe what you want and let it go.</li>
-        <li><strong>Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/review-pr</code></strong> after it's built to have Claude's review agents check the code. If the review passes, you're good. If it finds issues, tell Claude to fix them.</li>
-      </ol>
+      <h3>The Prompt Formula That Works</h3>
+      <p>Every project we've built follows the same prompt structure: <strong>what it is</strong>, <strong>who it's for</strong>, <strong>what sections to include</strong>, and <strong>how thorough to be</strong>. Here are the actual prompts (cleaned up) from projects we've shipped:</p>
 
-      <h3>Start with a One-Sentence Brief</h3>
-      <p>Be specific about what you want. The more context, the better the output:</p>
+      <h3>Explainer Sites (Most Common)</h3>
+      <p>These are single-page sites that explain something complex to a non-technical audience. We've used them for investor updates, app explainers, and technical deep dives.</p>
 
       <div class="prompt-example">
-        <p>"Build me a single-page explainer for our retirement planning app. Use a warm, natural color palette &mdash; forest greens and cream. Serif headings, sans-serif body. Include sections for what it does, how it works, and why it matters."</p>
+        <p>"Build me a single-page explainer for our retirement planning app. I need to explain this to people who aren't technical. Include: what the app does, how someone would use it (the user flow), what inputs it needs from the user, what outputs it shows, how to read the chart, and what the tech stack is in plain English. Use mermaid charts to show the user flow and the tech architecture. Explain the math simply &mdash; use analogies like 'snowball rolling downhill' for compound interest. Make it as visual as possible. Single HTML file."</p>
       </div>
 
       <div class="prompt-example">
-        <p>"Create a strategic briefing site for Boulder Startup Week 2026. Dark theme with navy and gold. Use glass-morphism effects. Include mermaid charts for the timeline and flowcharts for the event strategy."</p>
+        <p>"I need a visual explainer for our investors about the Glenwood Apartments refinancing deal. Explain: the big picture (old loan vs new loan), the new loan terms from Flatirons Bank, a timeline of what's happening and when, the cash situation (what we have, what's due, how we bridge the gap), and what 'non-recourse' means in plain English. Use mermaid charts for the timeline and for comparing the loan types. This is for investors who aren't in finance &mdash; explain everything thoroughly but don't be condescending."</p>
       </div>
 
-      <h3>Tell Claude How It Should Look</h3>
-      <p>Specify the <strong>vibe</strong> &mdash; color palette, font pairing, and mood:</p>
-      <div class="tip-grid">
-        <div class="tip-item">
-          <strong>Navy + Gold</strong>
-          Professional, executive, strategy-deck feel. Playfair Display headings + Inter body.
-        </div>
-        <div class="tip-item">
-          <strong>Forest + Cream</strong>
-          Warm, approachable, natural. DM Serif Display headings + Source Sans body.
-        </div>
-        <div class="tip-item">
-          <strong>Dark + Glass</strong>
-          Modern, techy, immersive. Backdrop blur, subtle gradients, floating elements.
-        </div>
-        <div class="tip-item">
-          <strong>Minimal + Light</strong>
-          Clean, editorial, content-first. Generous whitespace, restrained color.
-        </div>
+      <h3>Technical Analysis</h3>
+      <p>For when you need Claude to research something technical and present findings clearly.</p>
+
+      <div class="prompt-example">
+        <p>"We have 4 Mac Minis that we want to chain together to run AI models locally using Exo. The machines are: Cody's M4 Pro 24GB, Connor's M4 Pro 24GB, Gib's M4 Pro 24GB, and Sabrina's M4 Standard 16GB. Build me a visual explainer that covers: what models can fit in our 88GB total RAM, how fast they'll actually run (with real numbers), what the network bottleneck looks like, and what expansion options we have with pricing. Include mermaid charts showing the cluster architecture and the inference pipeline. Give me specific model names and sizes, not vague recommendations."</p>
       </div>
 
-      <h3>Key Phrases That Get Better Results</h3>
+      <h3>Strategy &amp; Decision Documents</h3>
+      <p>For presenting a recommendation that needs approval.</p>
+
+      <div class="prompt-example">
+        <p>"Create a strategic briefing site for Dan about Caruso Ventures' involvement in Boulder Startup Week 2026. Lead with the recommendation (what tier to sponsor, what panels to host). Then explain the rationale &mdash; why this tier and not another. Include 5-6 panel concepts that tie back to our portfolio companies. End with a clear execution roadmap and next steps. This is a decision document &mdash; Dan should be able to approve, modify, or reject at the end."</p>
+      </div>
+
+      <h3>Event &amp; Ops Planning</h3>
+      <p>For turning ideas into actionable plans with checklists and timelines.</p>
+
+      <div class="prompt-example">
+        <p>"Build me a planning page for a Young Leaders Trivia Night at Boulder Startup Week. I need: the event format (4 rounds, randomized teams, $1K budget), our goals (brand positioning, community building, deal flow), how we fill the room (personal outreach, LinkedIn, Slack), 3 venue options with pros/cons, a run of show timeline, budget breakdown, and a phased execution checklist (this week, 2 weeks out, 1 week out, day before, day of, after). Include specific names and responsibilities."</p>
+      </div>
+
+      <h3>Key Phrases That Make a Difference</h3>
       <ul>
-        <li><strong>"Use as many pictures and visuals as possible"</strong> &mdash; Claude will add images, icons, and illustrations instead of walls of text</li>
-        <li><strong>"Include mermaid charts for the [timeline/flowchart/org chart]"</strong> &mdash; Claude will generate Mermaid.js diagrams that render beautifully</li>
-        <li><strong>"Make it a single HTML file with inline CSS and JS"</strong> &mdash; no build step, just open in a browser</li>
-        <li><strong>"Use Google Fonts via CDN"</strong> &mdash; specify the fonts you want (Inter, Playfair Display, DM Serif Display, Source Sans 3)</li>
-        <li><strong>"Add smooth scrolling and scroll-driven animations"</strong> &mdash; makes everything feel polished and alive</li>
-        <li><strong>"Mobile responsive"</strong> &mdash; Claude adds media queries automatically</li>
-        <li><strong>"Glass-morphism with backdrop-filter blur"</strong> &mdash; that frosted glass look for cards and overlays</li>
+        <li><strong>"Use mermaid charts for the [timeline / flowchart / architecture / comparison]"</strong> &mdash; Claude generates diagrams that actually render. We use these in almost every project.</li>
+        <li><strong>"Make it as visual as possible"</strong> &mdash; Claude adds cards, grids, icons, and diagrams instead of walls of text</li>
+        <li><strong>"Explain this thoroughly"</strong> &mdash; Claude won't skim over details. It'll use analogies and plain language</li>
+        <li><strong>"This is for [audience] who aren't [technical/financial/etc.]"</strong> &mdash; sets the right tone</li>
+        <li><strong>"Include specific [names / numbers / models / prices]"</strong> &mdash; prevents vague hand-waving</li>
+        <li><strong>"Single HTML file"</strong> &mdash; no build step, just open in a browser</li>
+        <li><strong>"End with clear next steps / action items"</strong> &mdash; every good doc has a CTA</li>
       </ul>
 
-      <h3>Example Prompts from Real Projects</h3>
-
-      <div class="prompt-example">
-        <p>"I need a website that explains our portfolio company strategy to limited partners. Make it look like a premium strategy deck &mdash; dark background, gold accents, serif headings. Use /frontend-design for the best quality. Include mermaid charts showing our investment thesis flow. Single HTML file."</p>
-      </div>
-
-      <div class="prompt-example">
-        <p>"Build me an internal dashboard for tracking our portfolio companies. I need a sidebar with navigation, a main area with summary cards showing total invested, current value, and MOIC, then a table of all companies below. Use our standard stack &mdash; Next.js, Supabase, Tailwind. Make it look executive, not startup-y."</p>
-      </div>
-
-      <div class="prompt-example">
-        <p>"Create a trivia night event page for Young Leaders. Fun, vibrant, but still professional. Include the schedule, team registration info, and a merch section. Use images and keep the energy high. Deploy to GitHub Pages."</p>
-      </div>
-
-      <h3>The Review Loop</h3>
-      <p>After Claude builds something, always review:</p>
+      <h3>The Build &rarr; Review &rarr; Ship Workflow</h3>
+      <p>This is the process we follow for everything:</p>
       <ol>
-        <li><strong>Open it in your browser</strong> to check visually</li>
-        <li><strong>Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/review-pr</code></strong> to have the PR Review Toolkit agents check code quality, test coverage, error handling, and type design</li>
+        <li><strong>Prompt Claude</strong> with a detailed brief (use the examples above as templates)</li>
+        <li><strong>Use <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/frontend-design</code></strong> if you want the design quality to be extra high</li>
+        <li><strong>Open it in your browser</strong> to check it visually</li>
+        <li><strong>Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/review-pr</code></strong> &mdash; this launches the review agents that check code quality, look for bugs, hunt for silent failures, and validate the structure. Think of it as having a senior developer look over Claude's work before you ship it.</li>
+        <li><strong>If the review flags issues</strong> &mdash; just say "fix the issues from the review" and Claude addresses them</li>
         <li><strong>If the review passes</strong> &mdash; ship it. Tell Claude to commit, push, and deploy.</li>
-        <li><strong>If the review flags issues</strong> &mdash; just say "fix the issues from the review" and Claude will address them</li>
         <li><strong>Run <code style="font-family:'JetBrains Mono',monospace;font-size:0.85em;">/simplify</code></strong> to clean up the code after everything looks right</li>
       </ol>
 
-      <h3>Iterate with Voice</h3>
-      <p>Once you've got something on screen, use voice (spacebar) to quickly iterate: "make the hero bigger", "swap to a dark background", "add a section about pricing". Claude edits the file in place, so just refresh your browser to see changes.</p>
+      <div class="callout callout-warn">
+        <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+        <span><strong>Always run /review-pr before shipping anything important.</strong> The review agents catch things you won't see &mdash; error handling gaps, security issues, code that looks right but will break in edge cases. It takes 30 seconds and has saved us multiple times.</span>
+      </div>
+
+      <h3>Iterating with Voice</h3>
+      <p>Once you have something on screen, use voice (spacebar) to quickly iterate. Claude edits the file in place &mdash; just refresh your browser.</p>
+      <ul>
+        <li>"Make the timeline section bigger and add more detail"</li>
+        <li>"The budget section needs a table, not bullet points"</li>
+        <li>"Add a mermaid chart showing the org structure"</li>
+        <li>"This is too vague &mdash; add specific numbers and dates"</li>
+      </ul>
 
       <div class="callout callout-tip">
         <svg class="callout-icon" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/></svg>
-        <span><strong>Single-file HTML is king.</strong> For explainers, landing pages, and internal tools &mdash; one self-contained HTML file with inline CSS/JS is the fastest path. No build step. No dependencies. Just open in a browser. Save the full-stack (Next.js + Supabase) for projects that actually need a database and auth.</span>
+        <span><strong>Single-file HTML is king.</strong> For explainers, briefings, and internal tools &mdash; one self-contained HTML file is the fastest path. No build step, no dependencies, just open in a browser. Save the full-stack (Next.js + Supabase) for projects that actually need a database and auth.</span>
       </div>
     </div>
   </section>
